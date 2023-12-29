@@ -8,6 +8,22 @@ const {
     pageValidation,
     editValidation
 } = require('../utils/validations')
+const path = require('path')
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        console.log(path.join(__dirname,'..', 'static'))
+        cb(null, path.join(__dirname,'..', 'static'))
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    },
+})
+
+const upload = multer({
+    storage: storage
+})
+
 
 /**
  * @swagger
@@ -71,7 +87,7 @@ router.get('/profile/:id', idValidation, userController.getUser)
  *         description: Unauthorized 
 
  */
-router.put('/profile', editValidation, authenticate, userController.editUser)
+router.put('/profile', upload.single('photo'), editValidation, authenticate, userController.editUser)
 /**
  * @swagger
  * /api/user/profiles:
@@ -93,3 +109,5 @@ router.put('/profile', editValidation, authenticate, userController.editUser)
 router.get('/profiles', pageValidation, userController.getUsers)
 
 module.exports = router
+
+

@@ -45,6 +45,8 @@ class UserController {
         try {
             const result = validationResult(req)
             if (result.isEmpty()) {
+                const host = 'localhost:3000'
+                req.body.photo = `http://${host}/static/${req.file.filename}`
                 const result = userService.editUser(req.userId, req.body)
                 return res.send(result)
             } else {
