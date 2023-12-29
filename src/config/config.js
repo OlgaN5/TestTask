@@ -14,6 +14,6 @@ module.exports = async function applyConfigSettings(app) {
     //     force: true
     // })
     app.use(express.json())
-    app.use('/static', express.static(path.join(__dirname, 'static')));
+    app.use('/static', express.static(path.join(__dirname,'..', 'static')));
     swaggerConfig.initSwaggerDoc(app)
 }
