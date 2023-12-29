@@ -3,6 +3,7 @@ const cors = require('./cors.config')
 const swaggerConfig = require('./swagger.config')
 const db = require('./database')
 const express = require('express')
+const path = require('path')
 
 module.exports = async function applyConfigSettings(app) {
 
@@ -13,5 +14,6 @@ module.exports = async function applyConfigSettings(app) {
     //     force: true
     // })
     app.use(express.json())
+    app.use('/static', express.static(path.join(__dirname, 'static')));
     swaggerConfig.initSwaggerDoc(app)
 }
